@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{{ background_image }}');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 8px 0;
+        }
+        input {
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1.1em;
+            width: 70%;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: #ffcccc;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+        <form method="POST" action="/weather">
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit">Get Weather</button>
+        </form>
+        {% if !error.is_empty() %}
+            <p class="error">{{ error }}</p>
+        {% else if !city.is_empty() %}
+            <h2>Weather in {{ city }}</h2>
+            <p>Temperature: {% if !temperature.is_empty() %} {{ temperature }} {% else %} N/A {% endif %}</p>
+            <p>Feels Like: {% if !feels_like.is_empty() %} {{ feels_like }} {% else %} N/A {% endif %}</p>
+            <p>Humidity: {% if !humidity.is_empty() %} {{ humidity }} {% else %} N/A {% endif %}</p>
+            <p>Precipitation: {% if !precipitation.is_empty() %} {{ precipitation }} {% else %} N/A {% endif %}</p>
+            <p>Wind Speed: {% if !wind_speed.is_empty() %} {{ wind_speed }} {% else %} N/A {% endif %}</p>
+            <p>Condition: {% if !condition.is_empty() %} {{ condition }} {% else %} N/A {% endif %}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
